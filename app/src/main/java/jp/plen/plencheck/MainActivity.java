@@ -4,6 +4,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +16,50 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final VerticalSeekbar vs = (VerticalSeekbar)findViewById(R.id.vertseek);
+        final TextView tv = (TextView)findViewById(R.id.textView);
+
+        tv.setText(String.valueOf(vs.getProgress()));
+        vs.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        tv.setText(String.valueOf(vs.getProgress()));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
+
+        final Button bup = (Button)findViewById(R.id.buttonup);
+        final Button dup = (Button)findViewById(R.id.buttondown);
+
+        bup.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        vs.setProgress(vs.getProgress()+1);
+                    }
+                }
+        );
+
+        dup.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        vs.setProgress(vs.getProgress()-1);
+                    }
+                }
+        );
     }
 
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/pre-dexed/debug/classes-c4b3d89443d286192ec96822de2c9c17fe99ba6e.jar" />
+    </item>
+    <item
+        jar="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-8a13b716967edac3b40381f4d28cc46d3bcb59cc.jar" />
+    </item>
+    <item
+        jar="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/pre-dexed/debug/classes-58e60bc66aae9954e5047c8805194d2f3f8839c6.jar" />
+    </item>
+    <item
+        jar="/Applications/adt-bundle-mac-x86_64/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/yuki/Workspace/PLENCheck/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-5fcb6ab5b44a575924a36f3d1295945808dbeb08.jar" />
+    </item>
+
+</items>
