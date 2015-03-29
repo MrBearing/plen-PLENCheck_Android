@@ -17,8 +17,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final VerticalSeekbar vs = (VerticalSeekbar)findViewById(R.id.vertseek);
-        final TextView tv = (TextView)findViewById(R.id.textView);
+        final VerticalSeekbar vs = (VerticalSeekbar) findViewById(R.id.vertseek);
+        final TextView tv = (TextView) findViewById(R.id.textView);
 
         tv.setText(String.valueOf(vs.getProgress()));
         vs.setOnSeekBarChangeListener(
@@ -40,14 +40,14 @@ public class MainActivity extends ActionBarActivity {
                 }
         );
 
-        final Button bup = (Button)findViewById(R.id.buttonup);
-        final Button dup = (Button)findViewById(R.id.buttondown);
+        final Button bup = (Button) findViewById(R.id.buttonup);
+        final Button dup = (Button) findViewById(R.id.buttondown);
 
         bup.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        vs.setProgress(vs.getProgress()+1);
+                        vs.setProgress(vs.getProgress() + 1);
                     }
                 }
         );
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        vs.setProgress(vs.getProgress()-1);
+                        vs.setProgress(vs.getProgress() - 1);
                     }
                 }
         );
