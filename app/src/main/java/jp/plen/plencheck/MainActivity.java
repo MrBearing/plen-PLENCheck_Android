@@ -10,9 +10,12 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import jp.plen.plencheck.ble.BLEDevice;
+
 
 public class MainActivity extends ActionBarActivity {
     private boolean isClearChecked = false;
+    private BLEDevice bleDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +92,25 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
-    }
 
+        bleDevice = new BLEDevice(this);
+
+        Button homeButton = (Button)findViewById(R.id.button);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bleDevice.write("Home");
+            }
+        });
+
+        Button maxButton = (Button)findViewById(R.id.button2);
+        maxButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bleDevice.write("Max");
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
