@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import jp.plen.plencheck.ble.BLEDevice;
 
 public class MainActivity extends ActionBarActivity {
     private boolean isClearChecked = false;
+    private int checkedNum = R.id.radioButton0;
     private BLEDevice bleDevice;
 
     @Override
@@ -31,6 +33,10 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         tv.setText(String.valueOf(vs.getProgress()));
+                        int i = Integer.parseInt(((RadioButton)findViewById(checkedNum)).getText().toString());
+                        String hexNum = String.format("%02x", i);
+                        String deg = String.format("%03x", vs.getProgress());
+                        bleDevice.write("#SA" + hexNum +deg);
                     }
 
                     @Override
@@ -75,6 +81,7 @@ public class MainActivity extends ActionBarActivity {
                 if(isClearChecked){
                     isClearChecked = false;
                 } else if (checkedId != -1) {
+                    checkedNum = checkedId;
                     isClearChecked = true;
                     radioGroupRight.clearCheck();
                 }
@@ -87,6 +94,7 @@ public class MainActivity extends ActionBarActivity {
                 if(isClearChecked){
                     isClearChecked = false;
                 } else if (checkedId != -1) {
+                    checkedNum = checkedId;
                     isClearChecked = true;
                     radioGroupLeft.clearCheck();
                 }
@@ -99,7 +107,10 @@ public class MainActivity extends ActionBarActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bleDevice.write("Home");
+                int i = Integer.parseInt(((RadioButton)findViewById(checkedNum)).getText().toString());
+                String hexNum = String.format("%02x", i);
+                String deg = String.format("%03x", vs.getProgress());
+                bleDevice.write("#HO" + hexNum +deg);
             }
         });
 
@@ -107,7 +118,21 @@ public class MainActivity extends ActionBarActivity {
         maxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bleDevice.write("Max");
+                int i = Integer.parseInt(((RadioButton)findViewById(checkedNum)).getText().toString());
+                String hexNum = String.format("%02x", i);
+                String deg = String.format("%03x", vs.getProgress());
+                bleDevice.write("#MA" + hexNum +deg);
+            }
+        });
+
+        Button minButton = (Button)findViewById(R.id.button3);
+        minButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int i = Integer.parseInt(((RadioButton)findViewById(checkedNum)).getText().toString());
+                String hexNum = String.format("%02x", i);
+                String deg = String.format("%03x", vs.getProgress());
+                bleDevice.write("#MI" + hexNum +deg);
             }
         });
     }
