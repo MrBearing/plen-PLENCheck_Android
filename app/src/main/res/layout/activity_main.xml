@@ -6,6 +6,7 @@
     tools:context=".MainActivity">
 
     <RadioGroup
+        android:id="@+id/radioGroupLeft"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="1">
@@ -16,7 +17,8 @@
             android:text="0"
             android:id="@+id/radioButton0"
             android:layout_weight="1"
-            android:background="#ff87b0ff" />
+            android:background="#ff87b0ff"
+            android:checked="true" />
 
         <Space
             android:layout_width="match_parent"
@@ -236,6 +238,7 @@
 
 
     <RadioGroup
+        android:id="@+id/radioGroupRight"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="1">

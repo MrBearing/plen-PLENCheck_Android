@@ -1,16 +1,18 @@
 package jp.plen.plencheck;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+    private boolean isClearChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,33 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
         );
+
+        final RadioGroup radioGroupLeft = (RadioGroup) findViewById(R.id.radioGroupLeft);
+        final RadioGroup radioGroupRight = (RadioGroup) findViewById(R.id.radioGroupRight);
+
+        radioGroupLeft.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(isClearChecked){
+                    isClearChecked = false;
+                } else if (checkedId != -1) {
+                    isClearChecked = true;
+                    radioGroupRight.clearCheck();
+                }
+            }
+        });
+
+        radioGroupRight.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(isClearChecked){
+                    isClearChecked = false;
+                } else if (checkedId != -1) {
+                    isClearChecked = true;
+                    radioGroupLeft.clearCheck();
+                }
+            }
+        });
     }
 
 
