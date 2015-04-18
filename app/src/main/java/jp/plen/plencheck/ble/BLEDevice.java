@@ -11,16 +11,24 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * Created by yuki on 3/30/15.
  */
+
 public class BLEDevice {
     private Context context;
+    private BLECallbacks bleCallback;
     private final static String TAG = "BLEDevice";
     private BluetoothGatt gatt;
+    private ArrayList<String> deviceList = new ArrayList<>();
+
+    public interface BLECallbacks{
+        public void onConnected(String deviceName);
+    }
 
     private final BluetoothGattCallback bluetoothGattCallback = new BluetoothGattCallback() {
         @Override
@@ -67,8 +75,13 @@ public class BLEDevice {
             @Override
             public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
                 Log.d(TAG, "found: " + device.getName() + " addr:" + device.getAddress() + " rssi: " + rssi);
+
                 // ここでデバイス名やアドレスなどを見て接続処理を行う
-                connect(device);
+                boolean isConnected = connect(device);
+                if (isConnected && bleCallback!=null){
+                    bleCallback.onConnected(device.getName());
+                    bluetoothAdapter.stopLeScan(this);
+                }
             }
         };
 
@@ -85,6 +98,10 @@ public class BLEDevice {
                 bluetoothAdapter.stopLeScan(callback);
             }
         }.start();
+    }
+
+    public void setBLECallbacks(BLECallbacks bleCallback){
+        this.bleCallback = bleCallback;
     }
 
     public boolean connect(BluetoothDevice bluetoothDevice){
@@ -118,6 +135,7 @@ public class BLEDevice {
             Log.e(TAG, "Can't get a BluetoothGattCharacteristic");
             return false;
         }
+        characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
         characteristic.setValue(str);
         gatt.writeCharacteristic(characteristic);
         return true;
