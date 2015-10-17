@@ -18,14 +18,14 @@ import java.util.UUID;
 /**
  * Created by yuki on 3/30/15.
  */
-
+//45
 public class BLEDevice {
     private Context context;
     private BLECallbacks bleCallback;
     private final static String TAG = "BLEDevice";
     private BluetoothGatt gatt;
-    private ArrayList<String> deviceList = new ArrayList<>();
-
+    private ArrayList<String> deviceList = new ArrayList<String>();
+    private boolean isConnected;
     public interface BLECallbacks{
         public void onConnected(String deviceName);
     }
@@ -77,11 +77,12 @@ public class BLEDevice {
                 Log.d(TAG, "found: " + device.getName() + " addr:" + device.getAddress() + " rssi: " + rssi);
 
                 // ここでデバイス名やアドレスなどを見て接続処理を行う
-                boolean isConnected = connect(device);
+                isConnected = connect(device);
                 if (isConnected && bleCallback!=null){
                     bleCallback.onConnected(device.getName());
                     bluetoothAdapter.stopLeScan(this);
                 }
+
             }
         };
 
@@ -125,19 +126,25 @@ public class BLEDevice {
     }
 
     public boolean write(String str){
-        BluetoothGattService bluetoothGattService = gatt.getService(UUID.fromString(GATTAttributes.BLE_SHIELD_SERVICE));
-        if(bluetoothGattService == null){
-            Log.e(TAG, "Can't get a BluetoothGattService");
+        if (isConnected) {
+            BluetoothGattService bluetoothGattService = gatt.getService(UUID.fromString(GATTAttributes.BLE_SHIELD_SERVICE));
+            if (bluetoothGattService == null) {
+                Log.e(TAG, "Can't get a BluetoothGattService");
+                return false;
+            }
+            BluetoothGattCharacteristic characteristic = bluetoothGattService.getCharacteristic(UUID.fromString(GATTAttributes.BLE_SHIELD_TX));
+            if (characteristic == null) {
+                Log.e(TAG, "Can't get a BluetoothGattCharacteristic");
+                return false;
+            }
+            characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
+            characteristic.setValue(str);
+            gatt.writeCharacteristic(characteristic);
+
+            return true;
+        }
+        else {
             return false;
         }
-        BluetoothGattCharacteristic characteristic = bluetoothGattService.getCharacteristic(UUID.fromString(GATTAttributes.BLE_SHIELD_TX));
-        if(characteristic == null){
-            Log.e(TAG, "Can't get a BluetoothGattCharacteristic");
-            return false;
-        }
-        characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
-        characteristic.setValue(str);
-        gatt.writeCharacteristic(characteristic);
-        return true;
     }
 }
